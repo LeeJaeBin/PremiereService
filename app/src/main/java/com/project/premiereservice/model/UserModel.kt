@@ -2,22 +2,24 @@ package com.project.premiereservice.model
 
 import com.google.gson.annotations.SerializedName
 
-data class UserModel(
-        @SerializedName("id")
-        val id: String,
+data class UserModelClass(
+        @SerializedName("item")
+        val item: UserModel
+)
 
+data class UserModel(
         @SerializedName("nickname")
         val nickname: String,
 
         @SerializedName("phonenum")
-        val phoneNum: Int,
+        val phoneNum: String,
 
         @SerializedName("imei")
-        val imei: Int,
+        val imei: String,
 
         @SerializedName("category")
         val category: String,
 
-        @SerializedName("password")
-        val password: String
+        @SerializedName("image")
+        val image: String,
 )

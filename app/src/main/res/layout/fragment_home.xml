@@ -63,7 +63,7 @@
 
                     <TextView
                         android:fontFamily="@font/bold"
-                        android:textColor="@color/red"
+                        android:textColor="@color/black"
                         android:textSize="25dp"
                         android:text="마감임박! 영화들"
                         android:layout_width="match_parent"

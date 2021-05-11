@@ -3,23 +3,18 @@ package com.project.premiereservice
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.project.premiereservice.model.MovieModel
-import com.project.premiereservice.network.MovieLists
+import com.project.premiereservice.network.NetworkRequest
 import com.project.premiereservice.viewmodel.MainViewModel
 import com.project.premiereservice.viewmodel.MainViewModelFactory
 import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.layout_movie_countdown_item.*
 
 class HomeFragment : Fragment() {
 
@@ -57,7 +52,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun initViewModel() {
-        viewModelFactory = MainViewModelFactory(MovieLists())
+        viewModelFactory = MainViewModelFactory(NetworkRequest())
         viewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
 
         viewModel.movieList.observe(this) {

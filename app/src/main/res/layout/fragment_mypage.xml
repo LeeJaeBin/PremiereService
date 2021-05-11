@@ -16,6 +16,8 @@
             android:background="@android:color/darker_gray"/>
 
         <LinearLayout
+            android:id="@+id/layout_afterlogin_mypage"
+            android:visibility="visible"
             android:background="@color/lightgray"
             android:paddingRight="30dp"
             android:paddingLeft="30dp"
@@ -50,14 +52,40 @@
                 <TextView
                     android:textColor="@color/black"
                     android:textSize="17dp"
+                    android:lineSpacingExtra="5dp"
                     android:id="@+id/text_nickname_mypage"
-                    android:fontFamily="@font/bold"
+                    android:fontFamily="@font/regular"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_beforelogin_mypage"
+            android:visibility="gone"
+            android:background="@color/lightgray"
+            android:paddingRight="30dp"
+            android:paddingLeft="30dp"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="120dp">
+
+            <TextView
+                android:text="우측 상단의 로그인 버튼을 눌러 로그인해 주세요"
+                android:layout_gravity="center"
+                android:textColor="@color/black"
+                android:textSize="18dp"
+                android:id="@+id/text_information_mypage"
+                android:fontFamily="@font/regular"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
 
         </LinearLayout>
 
@@ -84,7 +112,7 @@
                 android:layout_gravity="center"
                 android:textSize="16dp"
                 android:textColor="@color/black"
-                android:fontFamily="@font/regular"
+                android:fontFamily="@font/bold"
                 android:text="시사회 시작전 알림 받기"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
@@ -123,7 +151,7 @@
                 android:layout_gravity="center"
                 android:textSize="16dp"
                 android:textColor="@color/black"
-                android:fontFamily="@font/regular"
+                android:fontFamily="@font/bold"
                 android:text="정보수정"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
@@ -153,7 +181,7 @@
                 android:layout_gravity="center"
                 android:textSize="16dp"
                 android:textColor="@color/black"
-                android:fontFamily="@font/regular"
+                android:fontFamily="@font/bold"
                 android:text="내 평가 모아보기"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
@@ -182,7 +210,7 @@
                 android:layout_gravity="center"
                 android:textSize="16dp"
                 android:textColor="@color/black"
-                android:fontFamily="@font/regular"
+                android:fontFamily="@font/bold"
                 android:text="버전정보"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
@@ -211,7 +239,7 @@
                 android:layout_gravity="center"
                 android:textSize="16dp"
                 android:textColor="@color/black"
-                android:fontFamily="@font/regular"
+                android:fontFamily="@font/bold"
                 android:text="공지사항"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
@@ -240,7 +268,7 @@
                 android:layout_gravity="center"
                 android:textSize="16dp"
                 android:textColor="@color/black"
-                android:fontFamily="@font/regular"
+                android:fontFamily="@font/bold"
                 android:text="고객센터 / 도움말"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
@@ -252,6 +280,7 @@
             android:background="@android:color/darker_gray"/>
 
         <LinearLayout
+            android:id="@+id/button_logout_mypage"
             android:paddingRight="30dp"
             android:paddingLeft="30dp"
             android:orientation="horizontal"
@@ -269,7 +298,7 @@
                 android:layout_gravity="center"
                 android:textSize="16dp"
                 android:textColor="@color/red"
-                android:fontFamily="@font/regular"
+                android:fontFamily="@font/bold"
                 android:text="로그아웃"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
