@@ -5,47 +5,58 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import android.widget.ImageView
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.project.premiereservice.model.MovieModel
+import com.project.premiereservice.model.RegisteredMovieModel
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.layout_movie_rank_item.view.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 
-class MovieRegisterAdapter(private val context: Context, private var movieList: ArrayList<MovieList>) : RecyclerView.Adapter<MovieRegisterAdapter.MovieRegisterViewHolder> () {
+class MovieRegisterAdapter(private var movieList: List<RegisteredMovieModel>) : RecyclerView.Adapter<MovieRegisterItemHolder> () {
+
+
+    interface OnMovieListsClickListener {
+        fun onItemClick(position: Int)
+    }
+
+    var listener: OnMovieListsClickListener? = null
 
     override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ) = run {
-        MovieRegisterViewHolder(parent)
+            parent: ViewGroup,
+            viewType: Int
+    ): MovieRegisterItemHolder {
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.layout_movie_register_item, parent, false)
+
+        return MovieRegisterItemHolder(view, listener)
     }
 
-    override fun onBindViewHolder(holder: MovieRegisterViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: MovieRegisterItemHolder, position: Int) {
+        holder.bind(movieList[position])
+    }
 
-        holder?.bind(movieList[position])
-
-        holder?.movieItemLayout.setOnClickListener {
-            val intent = Intent(context, PreviewCancelActivity::class.java)
-            intent.putExtra("id", movieList[position].id)
-            context.startActivity(intent)
+    fun update(updated: List<RegisteredMovieModel>) {
+        CoroutineScope(Dispatchers.Main).launch {
+            val diffResult = async(Dispatchers.IO) {
+                getDiffResult(updated)
+            }
+            movieList = updated
+            diffResult.await().dispatchUpdatesTo(this@MovieRegisterAdapter)
         }
     }
 
-    inner class MovieRegisterViewHolder(parent: ViewGroup): RecyclerView.ViewHolder(
-        LayoutInflater.from(parent.context).inflate(R.layout.layout_movie_register_item, parent, false)) {
-
-        val movieItemLayout: View = itemView.layout_movie
-        val mMoviePoster: ImageView = itemView.image_movie_poster
-
-        fun bind(movie: MovieList) {
-            //mMovieTitle.text = movie.movieTitle
-            Picasso.get().isLoggingEnabled = true
-            Picasso.get().load(movie.moviePoster).into(mMoviePoster);
-
-            val imageRadius = context.getDrawable(R.drawable.image_radius)
-            mMoviePoster.background = imageRadius;
-            mMoviePoster.clipToOutline = true;
-        }
+    private fun getDiffResult(updated: List<RegisteredMovieModel>): DiffUtil.DiffResult {
+        val diffCallback = RegisteredMovieListDiffCallback(movieList, updated)
+        return DiffUtil.calculateDiff(diffCallback)
     }
+
+    fun getItem(position: Int) = movieList[position]
 
     override fun getItemCount(): Int = movieList.size
 }

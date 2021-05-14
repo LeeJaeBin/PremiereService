@@ -22,6 +22,7 @@ import kotlinx.coroutines.launch
 class MovieFavoriteAdapter(private var movieList: List<MovieModel>) : RecyclerView.Adapter<MovieFavoriteItemHolder> (), Filterable {
 
     private var tempList: List<MovieModel>? = null
+    private var isMyType = false
 
     //private val pref =
 
@@ -53,9 +54,17 @@ class MovieFavoriteAdapter(private var movieList: List<MovieModel>) : RecyclerVi
                 val filteredList = ArrayList<MovieModel>()
                 for (row in movieList) {
                     val movieTypeList = row.movieCategory.split("/")
+                    val userTypeList = myType.split("/")
                     for(category in movieTypeList) {
-                        if(category == myType) {
-                            filteredList.add(row)
+                        for(myType in userTypeList) {
+                            if (category == myType) {
+                                filteredList.add(row)
+                                isMyType = true
+                                break
+                            }
+                        }
+                        if(isMyType) {
+                            isMyType = false
                             break
                         }
                     }

@@ -46,7 +46,7 @@ class MyPageFragment : Fragment() {
         setProfileImage()
         setText()
 
-        if(getSharedPreference("premiere", "id") == "null") {
+        if(getIntSharedPreference("premiere", "id") == 0) {
             button_logout_mypage.visibility = View.GONE
             layout_beforelogin_mypage.visibility = View.VISIBLE
             layout_afterlogin_mypage.visibility = View.GONE
@@ -58,10 +58,22 @@ class MyPageFragment : Fragment() {
         }
 
         button_logout_mypage.setOnClickListener {
-            setSharedPreference("premiere", "id", "null")
+            logoutProcess()
+
             val intent = Intent(activity, MainActivity::class.java)
             activity?.startActivity(intent)
+            activity?.finish()
         }
+    }
+
+    private fun logoutProcess() {
+        setIntSharedPreference("premiere", "id", 0)
+        setSharedPreference("premiere", "userid", "null")
+        setSharedPreference("premiere", "nickname", "null")
+        setSharedPreference("premiere", "phonenum", "null")
+        setSharedPreference("premiere", "imei", "null")
+        setSharedPreference("premiere", "category", "null")
+        setSharedPreference("premiere", "image", "null")
     }
 
     private fun setProfileImage() {
@@ -90,9 +102,20 @@ class MyPageFragment : Fragment() {
                 ?.edit()?.apply { putString(key, value); apply() }
     }
 
+    private fun setIntSharedPreference(prefsName: String, key: String, value: Int) {
+        context?.getSharedPreferences(prefsName, Context.MODE_PRIVATE)
+                ?.edit()?.apply { putInt(key, value); apply() }
+    }
+
     private fun getSharedPreference(prefsName: String, key: String): String {
         context?.getSharedPreferences(prefsName, Context.MODE_PRIVATE)
                 ?.getString(key, "null")?.let { return it }
         return "null"
+    }
+
+    private fun getIntSharedPreference(prefsName: String, key: String): Int {
+        context?.getSharedPreferences(prefsName, Context.MODE_PRIVATE)
+                ?.getInt(key, 0)?.let { return it }
+        return 0
     }
 }

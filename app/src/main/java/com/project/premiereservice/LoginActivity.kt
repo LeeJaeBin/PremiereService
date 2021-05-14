@@ -65,12 +65,13 @@ class LoginActivity : AppCompatActivity() {
             val editor = pref.edit()
 
             editor.putString("id", strId).apply()*/
-            setSharedPreference("premiere", "id", strId)
+            setSharedPreference("premiere", "userid", strId)
             viewModel.requestUserInfo(strId)
         }
     }
 
     private fun getUserInfoProcess(userInfo: UserModel) {
+        setIntSharedPreference("premiere", "id", userInfo.id)
         setSharedPreference("premiere", "nickname", userInfo.nickname)
         setSharedPreference("premiere", "phonenum", userInfo.phoneNum)
         setSharedPreference("premiere", "imei", userInfo.imei)
@@ -79,10 +80,16 @@ class LoginActivity : AppCompatActivity() {
 
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
+        finish()
     }
 
     private fun setSharedPreference(prefsName: String, key: String, value: String) {
         getSharedPreferences(prefsName, Context.MODE_PRIVATE)
                 .edit().apply { putString(key, value); apply() }
+    }
+
+    private fun setIntSharedPreference(prefsName: String, key: String, value: Int) {
+        getSharedPreferences(prefsName, Context.MODE_PRIVATE)
+                .edit().apply { putInt(key, value); apply() }
     }
 }

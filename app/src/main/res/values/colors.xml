@@ -10,6 +10,8 @@
     <color name="black">#FF000000</color>
     <color name="blackgray">#FF323232</color>
     <color name="lightgray">#FFebe9eb</color>
+    <color name="whitegray">#FFf1eff1</color>
+    <color name="brightgray">#FFf5f3f5</color>
     <color name="white">#FFFFFFFF</color>
     <color name="blue">#FF7d93c8</color>
     <color name="gray">#FFcccccc</color>

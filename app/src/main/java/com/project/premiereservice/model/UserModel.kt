@@ -8,6 +8,9 @@ data class UserModelClass(
 )
 
 data class UserModel(
+        @SerializedName("id")
+        val id: Int,
+
         @SerializedName("nickname")
         val nickname: String,
 
