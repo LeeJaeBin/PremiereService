@@ -206,7 +206,7 @@
 
     <ScrollView
         app:layout_constraintTop_toBottomOf="@id/layout_director_preview"
-        app:layout_constraintBottom_toTopOf="@id/button_register_preview"
+        app:layout_constraintBottom_toTopOf="@id/layout_button_good_register"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:paddingTop="20dp"
@@ -225,17 +225,63 @@
 
     </ScrollView>
 
-    <Button
-        android:id="@+id/button_register_preview"
-        android:paddingTop="20dp"
-        android:paddingBottom="20dp"
-        android:fontFamily="@font/regular"
-        android:background="@color/purple_500"
-        android:textColor="@color/white"
-        android:textSize="20dp"
-        android:text="시사회 신청하기"
+    <LinearLayout
+        android:id="@+id/layout_button_good_register"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="65dp">
+
+        <Button
+            android:id="@+id/button_register_preview"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp"
+            android:fontFamily="@font/regular"
+            android:background="@color/purple_500"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:text="시사회 신청하기"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/layout_button_preview"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:weightSum="2"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="65dp">
+
+        <Button
+            android:layout_weight="1"
+            android:id="@+id/button_unregister_preview"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp"
+            android:fontFamily="@font/regular"
+            android:background="@color/red"
+            android:textColor="@color/white"
+            android:textSize="16dp"
+            android:text="시사회 신청 취소하기"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <Button
+            android:layout_weight="1"
+            android:id="@+id/button_play_preview"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp"
+            android:fontFamily="@font/regular"
+            android:background="@color/purple_500"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:text="시사회 입장하기"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

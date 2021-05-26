@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:translationZ="10dp"
+        android:textColor="@color/white"
+        android:paddingLeft="15dp"
+        android:id="@id/exo_position"
+        app:layout_constraintTop_toBottomOf="@id/exo_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <com.google.android.exoplayer2.ui.DefaultTimeBar
+        android:background="@color/black"
+        app:layout_constraintBottom_toTopOf="@id/controllerLayout"
+        android:id="@id/exo_progress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:show_timeout="10000"
+        app:played_color="@color/purple_500"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:background="@color/black"
+        android:paddingTop="5dp"
+        android:paddingBottom="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/controllerLayout"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageButton
+                app:layout_constraintRight_toLeftOf="@id/exo_play"
+                android:layout_marginRight="70dp"
+                android:id="@+id/exo_rew"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/rewind"/>
+
+        <ImageButton
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:id="@id/exo_play"
+                android:background="@drawable/play"
+                android:layout_width="50dp"
+                android:layout_height="50dp"/>
+
+        <ImageButton
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:id="@id/exo_pause"
+                android:background="@drawable/pause"
+                android:layout_width="40dp"
+                android:layout_height="40dp"/>
+
+        <ImageButton
+                app:layout_constraintLeft_toRightOf="@id/exo_play"
+                android:layout_marginLeft="70dp"
+                android:id="@+id/exo_ffwd"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/forward"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

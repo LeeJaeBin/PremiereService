@@ -40,5 +40,8 @@ data class MovieInfoModel(
         val categories: String,
 
         @SerializedName("poster")
-        val poster: String
+        val poster: String,
+
+        @SerializedName("movieurl")
+        val movieUrl: String
 )

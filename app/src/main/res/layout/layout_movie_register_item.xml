@@ -17,6 +17,7 @@
         android:layout_height="100dp">
 
         <ImageView
+            android:id="@+id/image_failed_register"
             android:visibility="gone"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -29,6 +30,7 @@
             android:layout_height="match_parent"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_cover_register"
             android:alpha="1"
             android:layout_width="match_parent"
             android:layout_height="match_parent">

@@ -87,9 +87,11 @@ class RegisterFragment : Fragment() {
                 }
             }
 
+            mMovieRegisterAdapter.filter.filter("")
             recycler_movie_registered.run {
-                layoutManager = GridLayoutManager(mContext, 1)
+                layoutManager = GridLayoutManager(mContext, 3)
                 adapter = mMovieRegisterAdapter
+
             }
 
             recycler_movie_registered.isVerticalScrollBarEnabled = false

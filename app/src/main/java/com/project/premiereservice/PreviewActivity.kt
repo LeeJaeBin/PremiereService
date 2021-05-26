@@ -2,11 +2,14 @@ package com.project.premiereservice
 
 import android.app.AlertDialog
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Layout
 import android.view.LayoutInflater
+import android.view.View
 import android.view.Window
 import android.widget.Button
 import android.widget.TextView
@@ -24,6 +27,8 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_preview.*
 import kotlinx.android.synthetic.main.dialog_register_movie.*
 import kotlinx.android.synthetic.main.title_bar_register.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 class PreviewActivity : AppCompatActivity() {
 
@@ -33,6 +38,9 @@ class PreviewActivity : AppCompatActivity() {
     private var movieId: Long = 0
     private var isRegistered: Boolean = false
     private var isLiked = false
+    private var isShowTime = false
+
+    private var movieUrl: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,6 +71,21 @@ class PreviewActivity : AppCompatActivity() {
 
         button_register_preview.setOnClickListener {
             dialogSetting()
+        }
+
+        button_unregister_preview.setOnClickListener {
+            dialogSetting()
+        }
+
+        button_play_preview.setOnClickListener {
+            if(!isShowTime) {
+                Toast.makeText(this, "상영 30분 전부터 입장이 가능합니다", Toast.LENGTH_SHORT).show()
+            }
+            else{
+                val intent = Intent(this, PlayerActivity::class.java)
+                intent.putExtra("movieUrl", movieUrl)
+                startActivity(intent)
+            }
         }
     }
 
@@ -95,6 +118,7 @@ class PreviewActivity : AppCompatActivity() {
         }
 
         alertDialog.setView(view)
+        alertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         alertDialog.show()
     }
 
@@ -143,13 +167,26 @@ class PreviewActivity : AppCompatActivity() {
         text_story_preview.text = movieInfo.descriptionTxt
         text_like_preview.text = movieInfo.likes.toString()
         text_limit_preview.text = movieInfo.available.toString() + "명"
+
+        val dateFormat = SimpleDateFormat("yyyy.MM.dd HH:mm")
+        val curTime = dateFormat.parse(dateFormat.format(Date()))
+        val showTime = dateFormat.parse(movieInfo.showDate)
+
+        val remainingTime = (showTime.time - curTime.time) / 1000
+        if(remainingTime > 1800 || remainingTime <0) {
+            button_play_preview.setBackgroundColor(Color.parseColor("#888888"))
+        }
+        else{
+            movieUrl = movieInfo.movieUrl
+            isShowTime = true
+        }
     }
 
     private fun setLayout(isMovieRegistered: Boolean){
         isRegistered = isMovieRegistered
         if(isMovieRegistered) {
-            button_register_preview.setBackgroundColor(ContextCompat.getColor(this, R.color.red))
-            button_register_preview.text = "시사회 신청 취소하기"
+            button_register_preview.visibility = View.GONE
+            layout_button_preview.visibility = View.VISIBLE
         }
         else{
             button_register_preview.setBackgroundColor(ContextCompat.getColor(this, R.color.purple_500))

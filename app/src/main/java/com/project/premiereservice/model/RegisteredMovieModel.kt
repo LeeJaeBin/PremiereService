@@ -21,5 +21,8 @@ data class RegisteredMovieModel(
         val showDate: String,
 
         @SerializedName("isSuccess")
-        val isSuccess: Boolean
+        val isSuccess: Boolean,
+
+        @SerializedName("limitDate")
+        val limitDate: String
 )

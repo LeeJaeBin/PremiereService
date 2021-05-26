@@ -1,11 +1,15 @@
 package com.project.premiereservice
 
+import android.Manifest
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Window
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,10 +21,19 @@ class MainActivity : AppCompatActivity() {
 
     private var backKeyPressedTime: Long = 0
 
+    private val requiredPermissions = arrayOf(
+        Manifest.permission.ACCESS_WIFI_STATE,
+        Manifest.permission.READ_PHONE_STATE,
+        Manifest.permission.READ_EXTERNAL_STORAGE,
+        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+        Manifest.permission.INTERNET)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
         setContentView(R.layout.activity_main)
+
+        checkPermissions()
 
         if(getIntSharedPreference("premiere", "id") == 0) {
             window.setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.title_bar_nologin)
@@ -57,6 +70,20 @@ class MainActivity : AppCompatActivity() {
                 }
                 else -> return@setOnNavigationItemSelectedListener false
             }
+        }
+    }
+
+    private fun checkPermissions() {
+        var rejectedPermissionList = ArrayList<String>()
+
+        for(permission in requiredPermissions){
+            if(ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
+                rejectedPermissionList.add(permission)
+            }
+        }
+        if(rejectedPermissionList.isNotEmpty()){
+            val array = arrayOfNulls<String>(rejectedPermissionList.size)
+            ActivityCompat.requestPermissions(this, rejectedPermissionList.toArray(array), 100)
         }
     }
 
