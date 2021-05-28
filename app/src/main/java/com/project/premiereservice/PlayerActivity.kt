@@ -17,11 +17,12 @@ import android.view.View
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.exoplayer2.SimpleExoPlayer
+import com.google.android.exoplayer2.source.ConcatenatingMediaSource
 import com.google.android.exoplayer2.source.ExtractorMediaSource
 import com.google.android.exoplayer2.source.MediaSource
+import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection
 import com.google.android.exoplayer2.trackselection.TrackSelection
-import com.google.android.exoplayer2.ui.PlayerView
 import com.google.android.exoplayer2.upstream.BandwidthMeter
 import com.google.android.exoplayer2.upstream.DataSource
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter
@@ -88,8 +89,25 @@ class PlayerActivity : AppCompatActivity() {
             Util.getUserAgent(this, "TPlayerTestApp_TEA_AS"), null
         )
         val mp4VideoUri = Uri.parse(strMediaPath)
+
+        val videoUriList = arrayOfNulls<Uri>(3)
+
+        videoUriList[0] = Uri.parse("http://122.199.199.20/servertest/test/ad1.mp4")
+        videoUriList[1] = Uri.parse("http://122.199.199.20/servertest/test/ad2.mp4")
+        videoUriList[2] = mp4VideoUri
+
+        val videoSource = arrayOfNulls<MediaSource>(3)
+        for(i in 0..2) {
+            videoSource[i] = ProgressiveMediaSource.Factory(dataSourceFactory).setTag(i).createMediaSource(
+                videoUriList[i]
+            )
+        }
+
+        val mediaSource: MediaSource = ConcatenatingMediaSource(*videoSource)
+
+        /*
         val videoSource: MediaSource = ExtractorMediaSource.Factory(dataSourceFactory)
-            .createMediaSource(mp4VideoUri)
+            .createMediaSource(mp4VideoUri)*/
 
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
@@ -108,9 +126,9 @@ class PlayerActivity : AppCompatActivity() {
 
         val lp = window.attributes
 
-        playerView.useController = true
+        playerView.useController = false
         playerView.player = player
-        player.prepare(videoSource)
+        player.prepare(mediaSource)
 
         playerView.setOnTouchListener { _, motionEvent ->
 
